@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: test
-        image: rajd0311/gitops-test:38c7e4f
+        image: rajd0311/gitops-test:7cc566b
 
 ---
 apiVersion: v1
