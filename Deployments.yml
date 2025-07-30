@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: test
-        image: rajd0311/gitops-test:8f5c4a5
+        image: rajd0311/gitops-test:${SHORT_SHA}
 
 ---
 apiVersion: v1
