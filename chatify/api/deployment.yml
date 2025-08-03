@@ -1,0 +1,42 @@
+apiVersion : app/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels: 
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: rajd0311/chatify-api:2809af6a6331525fc98c13d1a05b6bd02f35f97a
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: REDIS_URL
+            valueFrom : 
+              configMapKeyRef:
+                name: api-config
+                key: REDIS_URL
+          - name: JWT_SECRET
+            valueFrom : 
+              configMapKeyRef:
+                name: api-config
+                key: JWT_SECRET
+          - name: DB_URL
+            valueFrom : 
+              configMapKeyRef : 
+                name : api-config
+                key: DB_URL

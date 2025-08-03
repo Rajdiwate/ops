@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ws
+spec:
+  selector:
+    matchLabels:
+      app: ws
+  template:
+    metadata:
+      labels:
+        app: ws
+    spec:
+      containers:
+      - name: ws
+        image: rajd0311/chatify-ws:2809af6a6331525fc98c13d1a05b6bd02f35f97a
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "1000m"
+        env: 
+          - name: REDIS_URL
+            valueFrom : 
+              configMapKeyRef:
+                name: ws-config
+                key: REDIS_URL
+          - name: KAFKA_URL
+            valueFrom : 
+              configMapKeyRef:
+                name: ws-config
+                key: KAFKA_URL
+          - name: MAIN_TOPIC
+            valueFrom : 
+              configMapKeyRef:
+                name: ws-config
+                key: MAIN_TOPIC
+          - name: JWT_SECRET
+            valueFrom : 
+              configMapKeyRef:
+                name: ws-config
+                key: JWT_SECRET
+        ports:
+        - containerPort: 3001

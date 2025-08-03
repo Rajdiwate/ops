@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-patch
+spec:
+  selector:
+    matchLabels:
+      app: data-patch
+  template:
+    metadata:
+      labels:
+        app: data-patch
+    spec:
+      containers:
+      - name: data-patch
+        image: rajd0311/chatify-data-patch:2809af6a6331525fc98c13d1a05b6bd02f35f97a
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: DB_URL
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: DB_URL
+          - name: TIME_THRESHOLD
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: TIME_THRESHOLD
+          - name: KAFKA_URL
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: KAFKA_URL
+          - name: LENGTH_THRESHOLD
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: LENGTH_THRESHOLD
+          - name: RETRY_TOPIC
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: RETRY_TOPIC
+          - name: MAIN_TOPIC
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: MAIN_TOPIC
+          - name: MAIN_CONSUMER_GROUP_ID
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: MAIN_CONSUMER_GROUP_ID
+          - name: RETRY_CONSUMER_GROUP_ID
+            valueFrom : 
+              configMapKeyRef:
+                name: data-patch-config
+                key: RETRY_CONSUMER_GROUP_ID

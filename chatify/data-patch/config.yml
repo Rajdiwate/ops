@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-patch-config
+data:
+  DB_URL: postgresql://postgres:mysecretpassword@db-service.default.svc.cluster.local:5432/chatify
+  TIME_THRESHOLD: '172800000'
+  KAFKA_URL: kafka.default.svc.cluster.local:9092
+  LENGTH_THRESHOLD: '20'
+  RETRY_TOPIC: retry
+  MAIN_TOPIC: persist
+  MAIN_CONSUMER_GROUP_ID: data-patch-service
+  RETRY_CONSUMER_GROUP_ID: data-patch-service-retry
